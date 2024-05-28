@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\blink_LED.obj" 
+TO ".\Objects\exp1" 
+PRINT(".\Listings\exp1.m51")

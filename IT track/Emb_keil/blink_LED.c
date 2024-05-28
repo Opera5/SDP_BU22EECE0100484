@@ -8,6 +8,7 @@ void main (void)
 
 			sw1 = 0;
 		  sw2 = 0;
+
 		
 		while(1)
 			{
@@ -16,18 +17,20 @@ void main (void)
 								P1 = 0x00;
 						
 							}
-					else if (sw2 == 1 && sw1 == 0)
+					else if (sw1 == 1 && sw2 == 0)
 						{
 									P1 = 0xF0;
 							delay(500);
 									P1 = 0x00;
+							delay(500);
 							
 							}
-					else if (sw1 == 1 && sw2 == 0)
+					else if (sw1 == 0 && sw2 == 1)
 						{	
 						P1 = 0x0F;
 							delay(500);
 						P1 = 0x00;
+							delay(500);
 					}		
 					else if (sw1 == 1 && sw2 == 1)
 						{
