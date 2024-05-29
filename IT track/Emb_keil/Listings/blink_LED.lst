@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   BLINK_LED                                                         05/28/2024 11:58:23 PAGE 1   
+C51 COMPILER V9.60.7.0   BLINK_LED                                                         05/29/2024 10:54:08 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE BLINK_LED
@@ -12,66 +12,82 @@ line level    source
    2          sbit sw1 = P2^1;
    3          sbit sw2 = P2^2;
    4          
-   5          void delay(unsigned int);
-   6          void main (void)
-   7            {
-   8   1      
-   9   1            sw1 = 0;
-  10   1            sw2 = 0;
-  11   1      
-  12   1          
-  13   1          while(1)
-  14   1            {
-  15   2                if (sw1 == 0 && sw2 == 0 )
-  16   2                  {
-  17   3                      P1 = 0x00;
-  18   3                  
-  19   3                    }
-  20   2                else if (sw1 == 1 && sw2 == 0)
-  21   2                  {
-  22   3                        P1 = 0xF0;
-  23   3                    delay(500);
-  24   3                        P1 = 0x00;
-  25   3                    delay(500);
-  26   3                    
-  27   3                    }
-  28   2                else if (sw1 == 0 && sw2 == 1)
-  29   2                  { 
-  30   3                  P1 = 0x0F;
-  31   3                    delay(500);
-  32   3                  P1 = 0x00;
-  33   3                    delay(500);
-  34   3                }   
-  35   2                else if (sw1 == 1 && sw2 == 1)
-  36   2                  {
-  37   3                    
-  38   3                      P1 = 0xFF;
-  39   3                      delay(500);
-  40   3                      P1 = 0x00;
-  41   3                      delay(500);
-  42   3                
-  43   3                }
-  44   2          }
-  45   1      
-  46   1      }
-  47            
-  48          void delay(unsigned int t)
-  49          {
-  50   1        unsigned int i, j;
-  51   1        for (i = 0, i < t ; i++;)
-  52   1        for (j = 0; j <1275 ; j++);
-  53   1          
-  54   1      }
-C51 COMPILER V9.60.7.0   BLINK_LED                                                         05/28/2024 11:58:23 PAGE 2   
+   5          unsigned int b;
+   6          void delay(unsigned int);
+   7          void main (void)
+   8            {
+   9   1      
+  10   1            sw1 = 0;
+  11   1            sw2 = 0;
+  12   1      
+  13   1          
+  14   1          while(1)
+  15   1            {
+  16   2              //P1 = 0x00;
+  17   2              /*
+  18   2                if (sw1 == 0 && sw2 == 0 )
+  19   2                  {
+  20   2                      P1 = 0x00;
+  21   2                  
+  22   2                    }
+  23   2                else if (sw1 == 1 && sw2 == 0)
+  24   2                  {
+  25   2                        P1 = 0xF0;
+  26   2                    delay(500);
+  27   2                        P1 = 0x00;
+  28   2                    delay(500);
+  29   2                    
+  30   2                    }
+  31   2                else if (sw1 == 0 && sw2 == 1)
+  32   2                  { 
+  33   2                  P1 = 0x0F;
+  34   2                    delay(500);
+  35   2                  P1 = 0x00;
+  36   2                    delay(500);
+  37   2                }   
+  38   2                else if (sw1 == 1 && sw2 == 1)
+  39   2                  {
+  40   2                    
+  41   2                      P1 = 0xFF;
+  42   2                      delay(500);
+  43   2                      P1 = 0x00;
+  44   2                      delay(500);
+  45   2                
+  46   2                }*/
+  47   2              
+  48   2      
+  49   2           
+  50   2        for(b = 0; b < 8; b++)
+  51   2        {    
+  52   3        const unsigned int mask = 1 << b;
+  53   3             unsigned short num = 0x00;
+  54   3             num |= mask;
+C51 COMPILER V9.60.7.0   BLINK_LED                                                         05/29/2024 10:54:08 PAGE 2   
 
+  55   3             
+  56   3            // PORTB = mask;
+  57   3          P1 = num;
+  58   3             delay(500);
+  59   3          }
+  60   2          
+  61   2          }
+  62   1      }
+  63            
+  64          void delay(unsigned int t)
+  65          {
+  66   1        unsigned int i, j;
+  67   1        for (i = 0, i < t ; i++;)
+  68   1        for (j = 0; j <1275 ; j++);
+  69   1          
+  70   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    105    ----
+   CODE SIZE        =    109    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       2
+   DATA SIZE        =      2       6
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
