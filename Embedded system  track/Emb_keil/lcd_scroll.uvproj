@@ -13,13 +13,13 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>IS89C51</Device>
-          <Vendor>ISSI</Vendor>
-          <Cpu>IRAM(0 - 0x7F) IROM(0 - 0xFFF) CLOCK(40000000)</Cpu>
+          <Device>8051 (all Variants)</Device>
+          <Vendor>Generic</Vendor>
+          <Cpu>IRAM(0-0x7F) IROM(0-0xFFF) CLOCK(12000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>3052</DeviceId>
+          <DeviceId>2994</DeviceId>
           <RegisterFile>REG51.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -46,7 +46,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>exp1</OutputName>
+          <OutputName>lcd_scroll</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -382,14 +382,9 @@
               <FilePath>.\STARTUP.A51</FilePath>
             </File>
             <File>
-              <FileName>blink_LED.c</FileName>
+              <FileName>lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\blink_LED.c</FilePath>
-            </File>
-            <File>
-              <FileName>LCD_scroll.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\LCD_scroll.c</FilePath>
+              <FilePath>.\lcd.c</FilePath>
             </File>
           </Files>
         </Group>

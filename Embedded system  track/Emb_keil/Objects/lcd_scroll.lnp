@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\lcd.obj" 
+TO ".\Objects\lcd_scroll" 
+PRINT(".\Listings\lcd_scroll.m51")

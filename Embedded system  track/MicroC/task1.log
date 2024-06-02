@@ -1,0 +1,16 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F876A -DL -O11111114 -fo16 -N"Z:\home\jamih\Downloads\SDP\SDP_BU22EECE0100484\Embedded system  track\MicroC\task1.mcppi" -SP"C:\users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"Z:\home\jamih\Downloads\SDP\SDP_BU22EECE0100484\Embedded system  track\MicroC\" -IP"C:\users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "task1.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
+diagnostics: 0	122	Compilation Started	task1.c
+error: 42	324	Undeclared identifier 'Lcd_Out' in expression	task1.c
+error: 50	324	Undeclared identifier 'Lcd_Cmd' in expression	task1.c
+error: 51	324	Undeclared identifier 'Lcd_Out' in expression	task1.c
+error: 52	324	Undeclared identifier 'Lcd_Out' in expression	task1.c
+error: 58	324	Undeclared identifier 'Lcd_Chr' in expression	task1.c
+error: 59	324	Undeclared identifier 'Lcd_Chr' in expression	task1.c
+error: 68	324	Undeclared identifier 'Lcd_Out' in expression	task1.c
+error: 97	324	Undeclared identifier 'Lcd_Init' in expression	task1.c
+error: 100	324	Undeclared identifier 'Lcd_Cmd' in expression	task1.c
+error: 101	324	Undeclared identifier 'Lcd_Cmd' in expression	task1.c
+error: 102	324	Undeclared identifier 'Lcd_Out' in expression	task1.c
+error: 103	324	Undeclared identifier 'Lcd_Out' in expression	task1.c
+error: 0	102	Finished (with errors): 02 Jun 2024, 13:17:00	task1.mcppi
