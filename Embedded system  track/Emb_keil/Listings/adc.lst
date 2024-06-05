@@ -1,0 +1,359 @@
+C51 COMPILER V9.60.7.0   ADC                                                               06/05/2024 18:50:19 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE ADC
+OBJECT MODULE PLACED IN .\Objects\adc.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.exe adc.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\adc.l
+                    -st) TABS(2) OBJECT(.\Objects\adc.obj)
+
+line level    source
+
+   1          # include<reg51.h>
+   2          
+   3          #include<stdio.h>
+   4          
+   5          sbit ale=P3^3;  
+   6          
+   7          sbit oe=P3^6; 
+   8          
+   9          sbit sc=P3^4; 
+  10          
+  11          sbit eoc=P3^5;  
+  12          
+  13          sbit clk=P3^7;  
+  14          
+  15          sbit ADDA=P3^0;  //Address pins for selecting input channels.
+  16          
+  17          sbit ADDB=P3^1;
+  18          
+  19          sbit ADDC=P3^2;
+  20          
+  21          #define lcdport P2  //lcd 
+  22          
+  23          sbit rs=P2^0;
+  24          
+  25          sbit rw=P2^2;
+  26          
+  27          sbit en=P2^1;
+  28          
+  29          #define input_port P1  //ADC
+  30          
+  31          int result[3],number;
+  32          
+  33          
+  34          void timer0() interrupt 1  // Function to generate clock of frequency 500KHZ using Timer 0 interrupt.
+  35          
+  36          {
+  37   1      
+  38   1      clk=~clk;
+  39   1      
+  40   1      }
+  41          
+  42          
+  43          void delay(unsigned int count)  
+  44          
+  45          {
+  46   1      
+  47   1      int i,j;
+  48   1      
+  49   1      for(i=0;i<count;i++)
+  50   1      
+  51   1        for(j=0;j<100;j++);
+  52   1      
+  53   1      }
+  54          
+C51 COMPILER V9.60.7.0   ADC                                                               06/05/2024 18:50:19 PAGE 2   
+
+  55          
+  56          void daten()
+  57          
+  58          {
+  59   1      
+  60   1          rs=1;
+  61   1      
+  62   1          rw=0;
+  63   1      
+  64   1          en=1;
+  65   1      
+  66   1          delay(1);
+  67   1      
+  68   1          en=0;
+  69   1      
+  70   1      }
+  71          
+  72          
+  73          void lcd_data(unsigned char ch)
+  74          
+  75          {
+  76   1      
+  77   1          lcdport=ch & 0xF0;
+  78   1      
+  79   1          daten();
+  80   1      
+  81   1          lcdport=ch<<4 & 0xF0;
+  82   1      
+  83   1          daten();
+  84   1      
+  85   1      }
+  86          
+  87          
+  88          
+  89          void cmden(void)
+  90          
+  91          {
+  92   1      
+  93   1          rs=0;
+  94   1      
+  95   1          en=1;
+  96   1      
+  97   1          delay(1);
+  98   1      
+  99   1          en=0;
+ 100   1      
+ 101   1      }
+ 102          
+ 103          
+ 104          void lcdcmd(unsigned char ch)
+ 105          
+ 106          {
+ 107   1      
+ 108   1      
+ 109   1          lcdport=ch & 0xf0;
+ 110   1      
+ 111   1          cmden();
+ 112   1      
+ 113   1          lcdport=ch<<4 & 0xF0;
+ 114   1      
+ 115   1          cmden();
+ 116   1      
+C51 COMPILER V9.60.7.0   ADC                                                               06/05/2024 18:50:19 PAGE 3   
+
+ 117   1      }
+ 118          
+ 119          
+ 120          
+ 121          lcdprint(unsigned char *str)  //Function to send string data to LCD.
+ 122          
+ 123          {
+ 124   1      
+ 125   1          while(*str)
+ 126   1      
+ 127   1          {
+ 128   2      
+ 129   2              lcd_data(*str);
+ 130   2      
+ 131   2              str++;
+ 132   2      
+ 133   2          }
+ 134   1      
+ 135   1      }
+ 136          
+ 137          
+ 138          void lcd_ini()  //Function to inisialize the LCD
+ 139          
+ 140          {
+ 141   1      
+ 142   1          lcdcmd(0x02);
+ 143   1      
+ 144   1          lcdcmd(0x28);
+ 145   1      
+ 146   1          lcdcmd(0x0e);
+ 147   1      
+ 148   1          lcdcmd(0x01);
+ 149   1      
+ 150   1      }
+ 151          
+ 152          
+ 153          void show()
+ 154          
+ 155          { 
+ 156   1      
+ 157   1         sprintf(result,"%d",number);
+*** WARNING C182 IN LINE 157 OF adc.c: pointer to different objects
+ 158   1      
+ 159   1         lcdprint(result);
+*** WARNING C182 IN LINE 159 OF adc.c: pointer to different objects
+ 160   1      
+ 161   1         lcdprint("  ");
+ 162   1      
+ 163   1      }
+ 164          
+ 165          
+ 166          void read_adc()
+ 167          
+ 168          {
+ 169   1      
+ 170   1         number=0;
+ 171   1      
+ 172   1         ale=1;
+ 173   1      
+ 174   1         sc=1;
+ 175   1      
+ 176   1         delay(1);
+C51 COMPILER V9.60.7.0   ADC                                                               06/05/2024 18:50:19 PAGE 4   
+
+ 177   1      
+ 178   1         ale=0;
+ 179   1      
+ 180   1         sc=0;
+ 181   1      
+ 182   1         while(eoc==1);
+ 183   1      
+ 184   1         while(eoc==0);
+ 185   1      
+ 186   1         oe=1;
+ 187   1      
+ 188   1         number=input_port;
+ 189   1      
+ 190   1         delay(1);
+ 191   1      
+ 192   1         oe=0;
+ 193   1      
+ 194   1      }
+ 195          
+ 196          
+ 197          void adc(int i)  //Function to drive ADC
+ 198          
+ 199          {
+ 200   1      
+ 201   1      switch(i)
+ 202   1      
+ 203   1        {
+ 204   2      
+ 205   2         case 0:
+ 206   2      
+ 207   2          ADDC=0;  // Selecting input channel IN0 using address lines
+ 208   2      
+ 209   2          ADDB=0;
+ 210   2      
+ 211   2          ADDA=0;
+ 212   2      
+ 213   2          lcdcmd(0xc0);
+ 214   2      
+ 215   2          read_adc();
+ 216   2      
+ 217   2          show();
+ 218   2      
+ 219   2          break;
+ 220   2      
+ 221   2      
+ 222   2         case 1:
+ 223   2      
+ 224   2          ADDC=0;  // Selecting input channel IN1 using address lines
+ 225   2      
+ 226   2          ADDB=0;
+ 227   2      
+ 228   2          ADDA=1;
+ 229   2      
+ 230   2          lcdcmd(0xc6);
+ 231   2      
+ 232   2          read_adc();
+ 233   2      
+ 234   2          show();
+ 235   2      
+ 236   2         break;
+ 237   2      
+ 238   2      
+C51 COMPILER V9.60.7.0   ADC                                                               06/05/2024 18:50:19 PAGE 5   
+
+ 239   2         case 2:
+ 240   2      
+ 241   2          ADDC=0;  // Selecting input channel IN2 using address lines
+ 242   2      
+ 243   2          ADDB=1;
+ 244   2      
+ 245   2          ADDA=0;
+ 246   2      
+ 247   2          lcdcmd(0xcc);
+ 248   2      
+ 249   2          read_adc();
+ 250   2      
+ 251   2          show();
+ 252   2      
+ 253   2          break;
+ 254   2      
+ 255   2        }
+ 256   1      
+ 257   1      }
+ 258          
+ 259          
+ 260          void main()
+ 261          
+ 262          {
+ 263   1      
+ 264   1       int i=0;
+ 265   1      
+ 266   1       eoc=1;
+ 267   1      
+ 268   1       ale=0;
+ 269   1      
+ 270   1       oe=0;
+ 271   1      
+ 272   1       sc=0;
+ 273   1      
+ 274   1       TMOD=0x02;
+ 275   1      
+ 276   1       TH0=0xFD;
+ 277   1      
+ 278   1      lcd_ini();
+ 279   1      
+ 280   1      lcdprint(" ADC 0808/0809  ");
+ 281   1      
+ 282   1      lcdcmd(192);
+ 283   1      
+ 284   1      lcdprint("  Interfacing   ");
+ 285   1      
+ 286   1      delay(500);
+ 287   1      
+ 288   1      lcdcmd(1);
+ 289   1      
+ 290   1      lcdprint("Circuit Digest ");
+ 291   1      
+ 292   1      lcdcmd(192);
+ 293   1      
+ 294   1      lcdprint("System Ready...   ");
+ 295   1      
+ 296   1      delay(500);
+ 297   1      
+ 298   1      lcdcmd(1);
+ 299   1      
+ 300   1      lcdprint("Ch1   Ch2   Ch3 ");
+C51 COMPILER V9.60.7.0   ADC                                                               06/05/2024 18:50:19 PAGE 6   
+
+ 301   1      
+ 302   1       IE=0x82;
+ 303   1      
+ 304   1       TR0=1;
+ 305   1      
+ 306   1      while(1)
+ 307   1      
+ 308   1      {
+ 309   2      
+ 310   2         for(i=0;i<3;i++)
+ 311   2      
+ 312   2         {
+ 313   3      
+ 314   3           adc(i);
+ 315   3      
+ 316   3           number=0;
+ 317   3      
+ 318   3         }
+ 319   2      
+ 320   2      }
+ 321   1      
+ 322   1      }
+*** WARNING C290 IN LINE 135 OF adc.c: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    421    ----
+   CONSTANT SIZE    =     92    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)
