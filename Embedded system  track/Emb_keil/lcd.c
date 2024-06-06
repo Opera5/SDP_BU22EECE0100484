@@ -180,7 +180,27 @@ lcdprint("  Interfacing   ");
 while(1)
 
 {
-
+			//delay(200);
+	//P3 = 0xFF;
+	ADDR_C = 0;
+	ADDR_B = 0; 
+	ADDR_A = 0; 
+	delay(10); 
+	ALE = 1; 
+	delay(10); 
+	SC = 1; 
+	delay(10);
+	ALE = 0;
+	SC = 0;
+	while(EOC==1); 
+	//while(EOC==0); 
+	OE=1;
+	delay(10); 
+	number = P3; 
+	P0 = number;
+	
+	delay(10);
+	OE = 0 ;
 	
 	delay(200);
 			lcdcmd(0x01); //Clear display screen
@@ -188,11 +208,11 @@ while(1)
 			lcdprint("CLASS STRENGTH");//Sending String to LCD
 			lcdcmd(0xc0); //Force cursor to the beginning ( 2nd line)
 			
-			lcd_data((MyData/ 10) + 48);//seperating the first digit of MyData
-			lcd_data((MyData% 10) + 48);//seperating the first digit of MyData
+			//lcd_data((MyData/ 10) + 48);//seperating the first digit of MyData
+			//lcd_data((MyData% 10) + 48);//seperating the first digit of MyData
 			
-			//sprintf(result,"%03d",number);
-			//lcdprint(result);
+			sprintf(result,"%03d",number);
+			lcdprint(result);
 			//lcdprint(" STUDENTS"); //Sending String to LCD
 
 }
