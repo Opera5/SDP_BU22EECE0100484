@@ -155,7 +155,7 @@ void main()
 //P2 = 0x00;
  int i=0;
 	unsigned char ADC_Value = 0;
-	P2 = 0xFF; 
+	P3 = 0xFF; 
 	EOC = 1;
 	ALE = 0;
 	OE = 0;
@@ -170,11 +170,7 @@ lcdcmd(192);
 
 lcdprint("  Interfacing   ");
 
-//delay(500);
 
-//lcdcmd(1);
-
-//lcdprint("Ch1   Ch2   Ch3 ");
 
 
 while(1)
@@ -193,9 +189,10 @@ while(1)
 	ALE = 0;
 	SC = 0;
 	while(EOC==1); 
-	//while(EOC==0); 
+	while(EOC==0); 
 	OE=1;
-	delay(10); 
+	delay(10);
+	
 	number = P3; 
 	P0 = number;
 	
@@ -205,16 +202,11 @@ while(1)
 	delay(200);
 			lcdcmd(0x01); //Clear display screen
 			lcdcmd(0x80); //Force cursor to the beginning ( 1st line)
-			lcdprint("CLASS STRENGTH");//Sending String to LCD
-			lcdcmd(0xc0); //Force cursor to the beginning ( 2nd line)
-			
-			//lcd_data((MyData/ 10) + 48);//seperating the first digit of MyData
-			//lcd_data((MyData% 10) + 48);//seperating the first digit of MyData
 			
 			sprintf(result,"%03d",number);
 			lcdprint(result);
-			//lcdprint(" STUDENTS"); //Sending String to LCD
-
+			lcdprint(" Volt"); //Sending String to LCD
 }
+
 
 }

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   LCD                                                               06/06/2024 04:16:25 PAGE 1   
+C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE LCD
@@ -62,7 +62,7 @@ line level    source
   52   1          en=0;
   53   1      
   54   1      }
-C51 COMPILER V9.60.7.0   LCD                                                               06/06/2024 04:16:25 PAGE 2   
+C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 2   
 
   55          
   56          
@@ -126,7 +126,7 @@ line level    source
  114   2      
  115   2              str++;
  116   2      
-C51 COMPILER V9.60.7.0   LCD                                                               06/06/2024 04:16:25 PAGE 3   
+C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 3   
 
  117   2          }
  118   1      
@@ -171,7 +171,7 @@ line level    source
  155   1      //P2 = 0x00;
  156   1       int i=0;
  157   1        unsigned char ADC_Value = 0;
- 158   1        P2 = 0xFF; 
+ 158   1        P3 = 0xFF; 
  159   1        EOC = 1;
  160   1        ALE = 0;
  161   1        OE = 0;
@@ -186,42 +186,56 @@ line level    source
  170   1      
  171   1      lcdprint("  Interfacing   ");
  172   1      
- 173   1      //delay(500);
+ 173   1      
  174   1      
- 175   1      //lcdcmd(1);
- 176   1      
-C51 COMPILER V9.60.7.0   LCD                                                               06/06/2024 04:16:25 PAGE 4   
+ 175   1      
+ 176   1      while(1)
+C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 4   
 
- 177   1      //lcdprint("Ch1   Ch2   Ch3 ");
- 178   1      
- 179   1      
- 180   1      while(1)
- 181   1      
- 182   1      {
- 183   2      
- 184   2        
- 185   2        delay(200);
- 186   2            lcdcmd(0x01); //Clear display screen
- 187   2            lcdcmd(0x80); //Force cursor to the beginning ( 1st line)
- 188   2            lcdprint("CLASS STRENGTH");//Sending String to LCD
- 189   2            lcdcmd(0xc0); //Force cursor to the beginning ( 2nd line)
- 190   2            
- 191   2            lcd_data((MyData/ 10) + 48);//seperating the first digit of MyData
- 192   2            lcd_data((MyData% 10) + 48);//seperating the first digit of MyData
- 193   2            
- 194   2            //sprintf(result,"%03d",number);
- 195   2            //lcdprint(result);
- 196   2            //lcdprint(" STUDENTS"); //Sending String to LCD
- 197   2      
- 198   2      }
- 199   1      
- 200   1      }
+ 177   1      
+ 178   1      {
+ 179   2            //delay(200);
+ 180   2        //P3 = 0xFF;
+ 181   2        ADDR_C = 0;
+ 182   2        ADDR_B = 0; 
+ 183   2        ADDR_A = 0; 
+ 184   2        delay(10); 
+ 185   2        ALE = 1; 
+ 186   2        delay(10); 
+ 187   2        SC = 1; 
+ 188   2        delay(10);
+ 189   2        ALE = 0;
+ 190   2        SC = 0;
+ 191   2        while(EOC==1); 
+ 192   2        while(EOC==0); 
+ 193   2        OE=1;
+ 194   2        delay(10);
+ 195   2        
+ 196   2        number = P3; 
+ 197   2        P0 = number;
+ 198   2        
+ 199   2        delay(10);
+ 200   2        OE = 0 ;
+ 201   2        
+ 202   2        delay(200);
+ 203   2            lcdcmd(0x01); //Clear display screen
+ 204   2            lcdcmd(0x80); //Force cursor to the beginning ( 1st line)
+ 205   2            
+ 206   2            sprintf(result,"%03d",number);
+*** WARNING C182 IN LINE 206 OF lcd.c: pointer to different objects
+ 207   2            lcdprint(result);
+*** WARNING C182 IN LINE 207 OF lcd.c: pointer to different objects
+ 208   2            lcdprint(" Volt"); //Sending String to LCD
+ 209   2      }
+ 210   1      
+ 211   1      
+ 212   1      }
 *** WARNING C290 IN LINE 119 OF lcd.c: missing return value
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    299    ----
-   CONSTANT SIZE    =     55    ----
+   CODE SIZE        =    333    ----
+   CONSTANT SIZE    =     51    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      9       6
@@ -230,4 +244,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  5 WARNING(S),  0 ERROR(S)
