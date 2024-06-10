@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 1   
+C51 COMPILER V9.60.7.0   LCD                                                               06/09/2024 23:52:50 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE LCD
@@ -35,184 +35,184 @@ line level    source
   25           sbit ADDR_B = P1^1;
   26           sbit ADDR_C = P1^2;
   27          
-  28          unsigned int result[3];
-  29          unsigned char number;
-  30          unsigned int MyData = 20;
-  31          
-  32          void delay(unsigned int t)////Function for setting 1ms delay
-  33          {
-  34   1        unsigned int i,j;
-  35   1        for(i=0;i<t;i++)
-  36   1        for(j=0;j<1275;j++);
-  37   1      }
-  38          
+  28          unsigned int result[6];
+  29          unsigned char number = 0;
+  30          int thous,hundreds,tens,ones;
+  31          unsigned int MyData = 20;
+  32          
+  33          void delay(unsigned int t)////Function for setting 1ms delay
+  34          {
+  35   1        unsigned int i,j;
+  36   1        for(i=0;i<t;i++)
+  37   1        for(j=0;j<1275;j++);
+  38   1      }
   39          
-  40          void daten()
-  41          
-  42          {
-  43   1      
-  44   1          rs=1;
-  45   1      
-  46   1          //rw=0;
-  47   1      
-  48   1          en=1;
-  49   1      
-  50   1          delay(1);
-  51   1      
-  52   1          en=0;
-  53   1      
-  54   1      }
-C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 2   
+  40          
+  41          void daten()
+  42          
+  43          {
+  44   1      
+  45   1          rs=1;
+  46   1      
+  47   1          //rw=0;
+  48   1      
+  49   1          en=1;
+  50   1      
+  51   1          delay(1);
+  52   1      
+  53   1          en=0;
+  54   1      
+C51 COMPILER V9.60.7.0   LCD                                                               06/09/2024 23:52:50 PAGE 2   
 
-  55          
+  55   1      }
   56          
-  57          void lcd_data(unsigned char ch)
-  58          
-  59          {
-  60   1      
-  61   1          lcdport=ch & 0xF0;
-  62   1      
-  63   1          daten();
-  64   1      
-  65   1          lcdport=ch<<4 & 0xF0;
-  66   1      
-  67   1          daten();
-  68   1      
-  69   1      }
-  70          
+  57          
+  58          void lcd_data(unsigned char ch)
+  59          
+  60          {
+  61   1      
+  62   1          lcdport=ch & 0xF0;
+  63   1      
+  64   1          daten();
+  65   1      
+  66   1          lcdport=ch<<4 & 0xF0;
+  67   1      
+  68   1          daten();
+  69   1      
+  70   1      }
   71          
   72          
-  73          void cmden(void)
-  74          
-  75          {
-  76   1      
-  77   1          rs=0;
-  78   1      
-  79   1          en=1;
-  80   1      
-  81   1          delay(1);
-  82   1      
-  83   1          en=0;
-  84   1      
-  85   1      }
-  86          
+  73          
+  74          void cmden(void)
+  75          
+  76          {
+  77   1      
+  78   1          rs=0;
+  79   1      
+  80   1          en=1;
+  81   1      
+  82   1          delay(1);
+  83   1      
+  84   1          en=0;
+  85   1      
+  86   1      }
   87          
-  88          void lcdcmd(unsigned char ch)
-  89          
-  90          {
-  91   1      
+  88          
+  89          void lcdcmd(unsigned char ch)
+  90          
+  91          {
   92   1      
-  93   1          lcdport=ch & 0xf0;
-  94   1      
-  95   1          cmden();
-  96   1      
-  97   1          lcdport=ch<<4 & 0xF0;
-  98   1      
-  99   1          cmden();
- 100   1      
- 101   1      }
- 102          
+  93   1      
+  94   1          lcdport=ch & 0xf0;
+  95   1      
+  96   1          cmden();
+  97   1      
+  98   1          lcdport=ch<<4 & 0xF0;
+  99   1      
+ 100   1          cmden();
+ 101   1      
+ 102   1      }
  103          
  104          
- 105          lcdprint(unsigned char *str)  //Function to send string data to LCD.
- 106          
- 107          {
- 108   1      
- 109   1          while(*str)
- 110   1      
- 111   1          {
- 112   2      
- 113   2              lcd_data(*str);
- 114   2      
- 115   2              str++;
- 116   2      
-C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 3   
+ 105          
+ 106          lcdprint(unsigned char *str)  //Function to send string data to LCD.
+ 107          
+ 108          {
+ 109   1      
+ 110   1          while(*str)
+ 111   1      
+ 112   1          {
+ 113   2      
+ 114   2              lcd_data(*str);
+ 115   2      
+ 116   2              str++;
+C51 COMPILER V9.60.7.0   LCD                                                               06/09/2024 23:52:50 PAGE 3   
 
- 117   2          }
- 118   1      
- 119   1      }
- 120          
+ 117   2      
+ 118   2          }
+ 119   1      
+ 120   1      }
  121          
- 122          void lcd_ini()  //Function to inisialize the LCD
- 123          
- 124          {
- 125   1      
- 126   1          lcdcmd(0x02);
- 127   1      
- 128   1          lcdcmd(0x28);
- 129   1      
- 130   1          lcdcmd(0x0e);
- 131   1      
- 132   1          lcdcmd(0x01);
- 133   1      
- 134   1      }
- 135          
+ 122          
+ 123          void lcd_ini()  //Function to inisialize the LCD
+ 124          
+ 125          {
+ 126   1      
+ 127   1          lcdcmd(0x02);
+ 128   1      
+ 129   1          lcdcmd(0x28);
+ 130   1      
+ 131   1          lcdcmd(0x0e);
+ 132   1      
+ 133   1          lcdcmd(0x01);
+ 134   1      
+ 135   1      }
  136          
- 137          void show()
- 138          
- 139          { 
- 140   1      
- 141   1         sprintf(result,"%d",number);
-*** WARNING C182 IN LINE 141 OF lcd.c: pointer to different objects
- 142   1      
- 143   1         lcdprint(result);
-*** WARNING C182 IN LINE 143 OF lcd.c: pointer to different objects
- 144   1      
- 145   1         lcdprint("  ");
- 146   1      
- 147   1      }
- 148          
+ 137          
+ 138          void show()
+ 139          
+ 140          { 
+ 141   1      
+ 142   1         sprintf(result,"%d",number);
+*** WARNING C182 IN LINE 142 OF lcd.c: pointer to different objects
+ 143   1      
+ 144   1         lcdprint(result);
+*** WARNING C182 IN LINE 144 OF lcd.c: pointer to different objects
+ 145   1      
+ 146   1         lcdprint("  ");
+ 147   1      
+ 148   1      }
  149          
  150          
  151          
- 152          void main()
- 153          
- 154          {
- 155   1      //P2 = 0x00;
- 156   1       int i=0;
- 157   1        unsigned char ADC_Value = 0;
- 158   1        P3 = 0xFF; 
- 159   1        EOC = 1;
- 160   1        ALE = 0;
- 161   1        OE = 0;
- 162   1        SC = 0;
- 163   1        
- 164   1      
- 165   1      lcd_ini();
- 166   1      
- 167   1      lcdprint(" ADC 0808/0809  ");
- 168   1      
- 169   1      lcdcmd(192);
- 170   1      
- 171   1      lcdprint("  Interfacing   ");
- 172   1      
+ 152          
+ 153          void main()
+ 154          
+ 155          {
+ 156   1      //P2 = 0x00;
+ 157   1       int i=0;
+ 158   1        unsigned char ADC_Value = 0;
+ 159   1        P3 = 0xFF; 
+ 160   1        EOC = 1;
+ 161   1        ALE = 0;
+ 162   1        OE = 0;
+ 163   1        SC = 0;
+ 164   1        
+ 165   1      
+ 166   1      lcd_ini();
+ 167   1      
+ 168   1      lcdprint(" ADC 0808/0809  ");
+ 169   1      
+ 170   1      lcdcmd(192);
+ 171   1      
+ 172   1      lcdprint("  Interfacing   ");
  173   1      
  174   1      
  175   1      
- 176   1      while(1)
-C51 COMPILER V9.60.7.0   LCD                                                               06/07/2024 10:32:31 PAGE 4   
+ 176   1      
+C51 COMPILER V9.60.7.0   LCD                                                               06/09/2024 23:52:50 PAGE 4   
 
- 177   1      
- 178   1      {
- 179   2            //delay(200);
- 180   2        //P3 = 0xFF;
- 181   2        ADDR_C = 0;
- 182   2        ADDR_B = 0; 
- 183   2        ADDR_A = 0; 
- 184   2        delay(10); 
- 185   2        ALE = 1; 
- 186   2        delay(10); 
- 187   2        SC = 1; 
- 188   2        delay(10);
- 189   2        ALE = 0;
- 190   2        SC = 0;
- 191   2        while(EOC==1); 
- 192   2        while(EOC==0); 
- 193   2        OE=1;
- 194   2        delay(10);
- 195   2        
+ 177   1      while(1)
+ 178   1      
+ 179   1      {
+ 180   2            //delay(200);
+ 181   2        //P3 = 0xFF;
+ 182   2        ADDR_C = 0;
+ 183   2        ADDR_B = 0; 
+ 184   2        ADDR_A = 0; 
+ 185   2        delay(10); 
+ 186   2        ALE = 1; 
+ 187   2        delay(10); 
+ 188   2        SC = 1; 
+ 189   2        delay(10);
+ 190   2        ALE = 0;
+ 191   2        SC = 0;
+ 192   2        while(EOC==1); 
+ 193   2        while(EOC==0); 
+ 194   2        OE=1;
+ 195   2        delay(10);
  196   2        number = P3; 
- 197   2        P0 = number;
+ 197   2        //P0 = number;
  198   2        
  199   2        delay(10);
  200   2        OE = 0 ;
@@ -221,24 +221,30 @@ line level    source
  203   2            lcdcmd(0x01); //Clear display screen
  204   2            lcdcmd(0x80); //Force cursor to the beginning ( 1st line)
  205   2            
- 206   2            sprintf(result,"%03d",number);
-*** WARNING C182 IN LINE 206 OF lcd.c: pointer to different objects
- 207   2            lcdprint(result);
-*** WARNING C182 IN LINE 207 OF lcd.c: pointer to different objects
- 208   2            lcdprint(" Volt"); //Sending String to LCD
- 209   2      }
- 210   1      
- 211   1      
- 212   1      }
-*** WARNING C290 IN LINE 119 OF lcd.c: missing return value
+ 206   2            
+ 207   2            
+ 208   2            
+ 209   2            sprintf(result,"%d",number);
+*** WARNING C182 IN LINE 209 OF lcd.c: pointer to different objects
+ 210   2            lcdprint(result);
+*** WARNING C182 IN LINE 210 OF lcd.c: pointer to different objects
+ 211   2            //lcdprint(((result / 100) % 10) + 48);//seperating the first digit of MyData
+ 212   2            //lcdprint(((result / 10)  % 10) + 48);//seperating the first digit of MyData
+ 213   2            //lcdprint((result % 10) + 48);//seperating the first digit of MyData
+ 214   2            lcdprint(" Volt"); //Sending String to LCD
+ 215   2      }
+ 216   1      
+ 217   1      
+ 218   1      }
+*** WARNING C290 IN LINE 120 OF lcd.c: missing return value
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    333    ----
-   CONSTANT SIZE    =     51    ----
+   CODE SIZE        =    330    ----
+   CONSTANT SIZE    =     46    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      9       6
+   DATA SIZE        =     23       6
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

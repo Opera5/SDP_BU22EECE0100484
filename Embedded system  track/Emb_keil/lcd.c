@@ -25,8 +25,9 @@ sbit en=P2^1;
  sbit ADDR_B = P1^1;
  sbit ADDR_C = P1^2;
 
-unsigned int result[3];
-unsigned char number;
+unsigned int result[6];
+unsigned char number = 0;
+
 unsigned int MyData = 20;
 
 void delay(unsigned int t)////Function for setting 1ms delay
@@ -192,9 +193,8 @@ while(1)
 	while(EOC==0); 
 	OE=1;
 	delay(10);
-	
 	number = P3; 
-	P0 = number;
+	//P0 = number;
 	
 	delay(10);
 	OE = 0 ;
@@ -203,8 +203,14 @@ while(1)
 			lcdcmd(0x01); //Clear display screen
 			lcdcmd(0x80); //Force cursor to the beginning ( 1st line)
 			
-			sprintf(result,"%03d",number);
+			
+			
+			
+			sprintf(result,"%d",number);
 			lcdprint(result);
+			//lcdprint(((result / 100) % 10) + 48);//seperating the first digit of MyData
+			//lcdprint(((result / 10)  % 10) + 48);//seperating the first digit of MyData
+			//lcdprint((result % 10) + 48);//seperating the first digit of MyData
 			lcdprint(" Volt"); //Sending String to LCD
 }
 

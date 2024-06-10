@@ -1,0 +1,18 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F876A -DL -O11111114 -fo16 -N"Z:\home\jamih\Downloads\SDP\SDP_BU22EECE0100484\Embedded system  track\MicroC\ADC.mcppi" -SP"C:\users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" -SP"Z:\home\jamih\Downloads\SDP\SDP_BU22EECE0100484\Embedded system  track\MicroC\" -IP"C:\users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\" "ADC.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
+diagnostics: 0	122	Compilation Started	__Lib_Delays.c
+diagnostics: 123	123	Compiled Successfully	__Lib_Delays.c
+diagnostics: 0	122	Compilation Started	ADC.c
+error: 28	324	Undeclared identifier 'Lcd_Init' in expression	ADC.c
+error: 29	324	Undeclared identifier 'Lcd_Cmd' in expression	ADC.c
+error: 34	324	Undeclared identifier 'Lcd_out' in expression	ADC.c
+error: 35	324	Undeclared identifier 'ADC_Read' in expression	ADC.c
+warning: 38	1508	Implicit conversion of int to ptr	ADC.c
+warning: 39	1506	Implicit conversion of pointer to int	ADC.c
+warning: 42	1508	Implicit conversion of int to ptr	ADC.c
+warning: 43	1506	Implicit conversion of pointer to int	ADC.c
+warning: 46	1508	Implicit conversion of int to ptr	ADC.c
+warning: 47	1506	Implicit conversion of pointer to int	ADC.c
+error: 49	324	Undeclared identifier 'Lcd_out' in expression	ADC.c
+error: 55	324	Undeclared identifier 'Lcd_Out' in expression	ADC.c
+error: 0	102	Finished (with errors): 10 Jun 2024, 01:05:41	ADC.mcppi
